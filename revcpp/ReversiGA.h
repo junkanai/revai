@@ -5,6 +5,7 @@
 
 #include "defines.h"
 #include "ai/ai.h"
+#include "reversi/reversi.h"
 
 class ReversiGA {
 private:

@@ -1,4 +1,4 @@
 #include "ReversiGA.h"
 
-ReversiGA::ReversiGA {
+ReversiGA::ReversiGA() {
 }

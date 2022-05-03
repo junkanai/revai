@@ -4,7 +4,7 @@ import time
 
 from revpy import Reversi, AI, Tiles, Side, SCREEN_SIZE
 
-DATA = "data/data1.txt"
+DATA_FILE = "data/data1.txt"
 
 def main():
     pygame.init()
@@ -12,7 +12,7 @@ def main():
     pygame.display.set_caption("vs REVERSI AI")
 
     reversi = Reversi()
-    #ai = AI(DATA)
+    #ai = AI(DATA_FILE)
     tiles = Tiles()
     side = Side()
 
