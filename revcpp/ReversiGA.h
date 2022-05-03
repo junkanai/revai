@@ -12,7 +12,7 @@ private:
 	std::array<AI, POPULATION> ais;
 public:
 	ReversiGA();
-	void read(std::string read_file);
+	void read(std::string read_file_name);
 	void start(int gen_max);
-	void write(std::string write_file);
+	void write(std::string write_file_name);
 };

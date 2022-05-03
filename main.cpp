@@ -12,9 +12,9 @@ using namespace std;
 int main() {
 	ReversiGA rga;
 
-	rga.read(READ_FILE);
+	//rga.read(READ_FILE);
 
 	rga.start(GEN_MAX);
 
-	rga.write(WRITE_FILE);
+	//rga.write(WRITE_FILE);
 }
