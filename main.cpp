@@ -1,7 +1,7 @@
 // main file to improve AI
 #include <iostream>
 
-#include "revcpp/reversi/reversi.h"
+#include "revcpp/ReversiGA.h"
 
 #define GEN_MAX 800
 #define READ_FILE "data/data1.txt"
