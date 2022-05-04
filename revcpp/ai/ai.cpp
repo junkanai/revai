@@ -10,8 +10,6 @@
 using myrand::roulette;
 
 float AI::evaluation(Reversi& r, int deep) {
-	if ( deep == 1 ) return evaluate(r.get_inputs());
-
 	float value, best1, best2;
 
 	if (play_color == BLACK) {
@@ -23,26 +21,43 @@ float AI::evaluation(Reversi& r, int deep) {
 		return 0;
 	}
 
+	if ( !r.is_game_continue() ) {
+		int score = r.get_score();
+		if ( score > 0 ) return 100000.0;
+		if ( score < 0 ) return -100000.0;
+		return 0.0;
+	}
+
+	if ( deep == 1 ) return evaluate(r.get_inputs());
+
 	for ( int y1=0; y1<REVERSI_SIZE; y1++ ) {
 		for ( int x1=0; x1<REVERSI_SIZE; x1++ ) {
 			if ( !r.is_puttable(x1, y1) ) continue;
 			Reversi rc = r.clone();
 			rc.put_stone(x1, y1);
-			if (play_color == BLACK) best2 = -100000.0;
-			if (play_color == WHITE) best2 = 100000.0;
 
-			for ( int y2=0; y2<REVERSI_SIZE; y2++ ) {
-				for ( int x2=0; x2<REVERSI_SIZE; x2++ ) {
-					if ( !rc.is_puttable(x2, y2) ) continue;
-					Reversi rcc = rc.clone();
-					rcc.put_stone(x2, y2);
-					value = evaluation(rcc, deep-2);
-					if ( play_color == BLACK ) {
-						if ( value < best2 ) continue;
-						best2 = value;
-					} else if ( play_color == WHITE ) {
-						if ( value > best2 ) continue;
-						best2 = value;
+			if ( !rc.is_game_continue() ) {
+				int score = rc.get_score();
+				if ( score > 0 ) best2 = 100000.0;
+				if ( score < 0 ) best2 = -100000.0;
+				if ( score == 0 ) best2 = 0;
+			} else {
+				if (play_color == BLACK) best2 = -100000.0;
+				else best2 = 100000.0;
+				for ( int y2=0; y2<REVERSI_SIZE; y2++ ) {
+					for ( int x2=0; x2<REVERSI_SIZE; x2++ ) {
+						if ( !rc.is_puttable(x2, y2) ) continue;
+						Reversi rcc = rc.clone();
+						rcc.put_stone(x2, y2);
+
+						value = evaluation(rcc, deep-2);
+						if ( play_color == BLACK ) {
+							if ( value < best2 ) continue;
+							best2 = value;
+						} else if ( play_color == WHITE ) {
+							if ( value > best2 ) continue;
+							best2 = value;
+						}
 					}
 				}
 			}

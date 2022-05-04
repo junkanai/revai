@@ -43,10 +43,54 @@ class AI:
 
 
     def evaluation(self, r, deep):
-        if deep == 1:
-            return self.evaluate(r.get_inputs())
+        best1 = 0
+        best2 = 0
+        if self.play_color == BLACK: best1 = 100000
+        elif self.play_color == WHITE: best1 = -100000
         else:
-            pass
+            print("AI's turn is not set")
+            return
+
+        if not r.is_game_continue():
+            if r.blacks > r.whites: return 100000
+            if r.blacks < r.whites: return -100000
+            return 0
+
+        if deep == 1: return self.evaluate(r.get_inputs())
+
+        for n1 in range(REVERSI_MAX):
+            if not r.is_puttable(n1): continue
+            rc = r.clone()
+            rc.put_stone(n1)
+
+            if not rc.is_game_continue():
+                if rc.blacks > rc.whites: best2 = 100000
+                if rc.blacks < rc.whites: best2 = -100000
+                if rc.blacks == rc.whites: best2 = 0
+            else:
+                if self.play_color == BLACK: best2 = -100000
+                else: best2 = 100000
+                for n2 in range(REVERSI_MAX):
+                    if not rc.is_puttable(n2): continue
+                    rcc = rc.clone()
+                    rcc.put_stone(n2)
+
+                    value = self.evaluation(rcc, deep-1)
+                    if self.play_color == BLACK:
+                        if value < best2: continue
+                        best2 = value
+                    else:
+                        if value > best2: continue
+                        best2 = value
+
+            if self.play_color == BLACK:
+                if best2 > best1: continue
+                best1 = best2
+            else:
+                if best2 < best1: continue
+                best1 = best2
+
+        return best1
 
     def evaluate(self, inputs):
         result = 0

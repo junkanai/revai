@@ -4,7 +4,7 @@
 
 #include "revcpp/revcpp.h"
 
-#define GEN_MAX 100
+#define GEN_MAX 10
 #define READ_FILE "data/data2.txt"
 #define WRITE_FILE "data/data2.txt"
 

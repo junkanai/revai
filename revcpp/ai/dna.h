@@ -4,6 +4,7 @@
 #include <array>
 
 #include "../defines.h"
+#include "../reversi.h"
 
 class DNA {
 private:

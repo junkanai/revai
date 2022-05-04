@@ -123,3 +123,6 @@ class Reversi:
         r.blacks = self.blacks
         r.whites = self.whites
         return r
+
+    def is_game_continue(self):
+        return ( self.turn != EMPTY )

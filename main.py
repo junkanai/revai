@@ -4,7 +4,7 @@ import time
 
 from revpy import Reversi, AI, Tiles, Side, SCREEN_SIZE, WHITE, BLACK
 
-DATA_FILE = "data/data1.txt"
+DATA_FILE = "data/data2.txt"
 
 def main():
     pygame.init()
@@ -25,8 +25,8 @@ def main():
         pygame.display.update()
 
         if reversi.turn == WHITE:
+            time.sleep(0.5)
             ai.put_stone(reversi)
-            time.sleep(1)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
