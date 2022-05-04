@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "reversi.h"
+#include "../reversi.h"
 
 #define b(y, x) board[y][x]
 #define by(y) b(y,0)+b(y,1)+b(y,2)+b(y,3)+b(y,4)+b(y,5)
@@ -42,32 +42,29 @@ array<float, PARAMETERS> Reversi::get_inputs() {
 
 	rtn[1] = arr[1]%WHITE;
 	rtn[2] = arr[1]/WHITE;
-	rtn[3] = arr[1]%WHITE - arr[1]/WHITE;
+	rtn[3] = rtn[1] - rtn[2];
 
 	rtn[4] = arr[2]%WHITE;
 	rtn[5] = arr[2]/WHITE;
-	rtn[6] = arr[2]%WHITE - arr[2]/WHITE;
+	rtn[6] = rtn[4] - rtn[5];
 
 	rtn[7] = arr[3]%WHITE;
 	rtn[8] = arr[3]/WHITE;
-	rtn[9] = arr[3]%WHITE - arr[3]/WHITE;
+	rtn[9] = rtn[7] - rtn[8];
 
 	rtn[10] = arr[4]%WHITE;
 	rtn[11] = arr[4]/WHITE;
-	rtn[12] = arr[4]%WHITE - arr[4]/WHITE;
+	rtn[12] = rtn[10] - rtn[11];
 
 	rtn[13] = arr[5]%WHITE;
 	rtn[14] = arr[5]/WHITE;
-	rtn[15] = arr[5]%WHITE - arr[5]/WHITE;
-	rtn[16] = arr[5]%WHITE + arr[5]/WHITE;
+	rtn[15] = rtn[13] - rtn[14];
+	rtn[16] = rtn[13] + rtn[14];
 
 	return rtn;
 }
 
-bool Reversi::is_puttable(int n) {
-	int y = n / REVERSI_SIZE;
-	int x = n % REVERSI_SIZE;
-
+bool Reversi::is_puttable(int x, int y) {
 	if (board[y][x] != EMPTY) return false;
 
 	int dx, dy, sx, sy, reverseCount;
@@ -91,9 +88,7 @@ bool Reversi::is_puttable(int n) {
 	return false;
 }
 
-void Reversi::put_stone(int n) {
-	int y = n / REVERSI_SIZE;
-	int x = n % REVERSI_SIZE;
+void Reversi::put_stone(int x, int y) {
 	int dx, dy, sx, sy, i, reverseCount;
 	board[y][x] = turn;
 	for ( dx=-1; dx<2; dx++ ) {
@@ -116,10 +111,10 @@ void Reversi::put_stone(int n) {
 			}
 		}
 	}
-	update();
+	update_turn();
 }
 
-void Reversi::update() {
+void Reversi::update_turn() {
 	turn = oppTurn; oppTurn = WHITE / turn;
 	if (is_nextPlayer_puttable()) return;
 
@@ -128,12 +123,14 @@ void Reversi::update() {
 	if (is_nextPlayer_puttable()) return;
 
 	// the game has end when the program comes here
-	turn = 0; oppTurn = 0; return;
+	turn = EMPTY; oppTurn = 0; return;
 }
 
 bool Reversi::is_nextPlayer_puttable() {
-	for ( int n=0; n<REVERSI_MAX; n++ ) {
-		if ( is_puttable(n) ) return true;
+	for ( int y=0; y<REVERSI_SIZE; y++ ) {
+		for ( int x=0; x<REVERSI_SIZE; x++ ) {
+			if ( is_puttable(x, y) ) return true;
+		}
 	}
 	return false;
 }

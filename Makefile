@@ -7,6 +7,7 @@ DEPS := $(SRCS:%.cpp=%.d)
 
 CC := g++
 CCFLAGS := -std=c++20
+CCFLAGS += -O2
 INCLUDEPATH := -I/usr/local/include
 LIBPATH =
 LIBS =

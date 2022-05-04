@@ -2,7 +2,7 @@
 import pygame
 import time
 
-from revpy import Reversi, AI, Tiles, Side, SCREEN_SIZE
+from revpy import Reversi, AI, Tiles, Side, SCREEN_SIZE, WHITE, BLACK
 
 DATA_FILE = "data/data1.txt"
 
@@ -12,10 +12,11 @@ def main():
     pygame.display.set_caption("vs REVERSI AI")
 
     reversi = Reversi()
-    #ai = AI(DATA_FILE)
+    ai = AI(DATA_FILE)
     tiles = Tiles()
     side = Side()
 
+    ai.set_white()
     working = True
 
     while working:
@@ -23,11 +24,9 @@ def main():
         side.draw(screen, reversi)
         pygame.display.update()
 
-        """
-        if reversi.turn = reversi.WHITE:
-            reversi.put_stone(ai.put_stone(reversi))
+        if reversi.turn == WHITE:
+            ai.put_stone(reversi)
             time.sleep(1)
-        """
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

@@ -1,18 +1,36 @@
 // main file to improve AI
 #include <iostream>
+#include <fstream>
 
-#include "revcpp/ReversiGA.h"
+#include "revcpp/revcpp.h"
 
-#define GEN_MAX 800
+#define GEN_MAX 50
 #define READ_FILE "data/data1.txt"
 #define WRITE_FILE "data/data1.txt"
+
+#define NC "\e[0m"
+#define MAG "\e[0;35m"
 
 int main() {
 	ReversiGA rga;
 
-	//rga.read(READ_FILE);
+	std::ifstream read_file;
+	read_file.open(READ_FILE, std::ios::in);
+	rga.read(read_file);
+	read_file.close();
 
-	rga.start(GEN_MAX);
+	{
+		StopWatch stopwatch;
 
-	//rga.write(WRITE_FILE);
+		for ( int gen=1; gen<=GEN_MAX; gen++ ) {
+			std::cout << MAG "Gen : " << gen << NC << std::endl;
+			rga.one_generation(gen);
+			stopwatch.lap();
+		}
+	}
+
+	std::ofstream write_file;
+	write_file.open(WRITE_FILE, std::ios::out);
+	rga.write(write_file);
+	write_file.close();
 }

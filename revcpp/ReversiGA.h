@@ -1,18 +1,18 @@
 #pragma once
 
-#include <array>
 #include <string>
+#include <array>
+#include <fstream>
 
-#include "defines.h"
-#include "ai/ai.h"
-#include "reversi/reversi.h"
+#include "ai.h"
 
 class ReversiGA {
 private:
 	std::array<AI, POPULATION> ais;
 public:
 	ReversiGA();
-	void read(std::string read_file_name);
-	void start(int gen_max);
-	void write(std::string write_file_name);
+	void play_reversi(AI& ai1, AI& ai2);
+	void one_generation(const int gen);
+	void read(std::ifstream& read_file);
+	void write(std::ofstream& write_file);
 };

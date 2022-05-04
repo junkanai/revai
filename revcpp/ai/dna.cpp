@@ -1,22 +1,43 @@
 #include <iostream>
 
 #include "dna.h"
+#include "random.h"
 
 using std::array;
+using myrand::rand_f;
+using myrand::roulette;
 
 DNA::DNA() {
 	for ( auto& arr : i_to_m ) {
-		for ( auto& a : arr ) a = 0.9;
+		for ( auto& a : arr ) a = rand_f();
 	}
-	for ( auto& a : m_to_o ) a = 0.9;
+	for ( auto& a : m_to_o ) a = rand_f();
 	reward = 0; gen = 0;
 }
 
-float DNA::evaluate(array<float, PARAMETERS> inputs) {
-	return 3.14;
+float DNA::evaluate(const array<float, PARAMETERS> inputs) {
+	float result = 0.0;
+	float tmp;
+
+	for ( int i=0; i<PARAMETERS; i++ ) {
+		tmp = 0.0;
+		for ( int j=0; j<PARAMETERS; j++ ) {
+			tmp += i_to_m[i][j] * inputs[j];
+		}
+		result += ReLU(tmp) * m_to_o[i];
+	}
+	return result;
 }
 
 void DNA::mutate() {
+	for ( auto& arr : i_to_m ) {
+		for ( auto& a : arr ) {
+			if (roulette(MUTATION_RATE)) a = rand_f();
+		}
+	}
+	for ( auto& a : m_to_o ) {
+		if (roulette(MUTATION_RATE)) a = rand_f();
+	}
 }
 
 void DNA::print() {
