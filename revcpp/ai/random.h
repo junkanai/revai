@@ -5,7 +5,6 @@
 #include <stdlib.h>
 
 namespace myrand {
-
 	inline void rand_init() {
 		srand(time(NULL));
 	}
@@ -18,5 +17,4 @@ namespace myrand {
 	inline bool roulette(float rate) {
 		return ( ((float)rand() / RAND_MAX) < rate);
 	}
-
 }

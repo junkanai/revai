@@ -33,7 +33,7 @@ void ReversiGA::play_reversi(AI& ai1, AI& ai2) {
 }
 
 void ReversiGA::one_generation(const int gen) {
-	// Quarlifying Round
+	// Qualifying Round
 	for ( auto& ai : ais ) ai.reward = 0;
 	for ( int a=0; a<POPULATION; a++ ) {
 		for ( int b=0; b<POPULATION; b++ ) {

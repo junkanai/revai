@@ -18,7 +18,7 @@ float AI::evaluation(Reversi& r, int deep) {
 		best1 = -100000.0;
 	} else {
 		std::cout << "AI's turn is not set." << std::endl;
-		return 0;
+		return 0.0;
 	}
 
 	if ( !r.is_game_continue() ) {
@@ -49,12 +49,11 @@ float AI::evaluation(Reversi& r, int deep) {
 						if ( !rc.is_puttable(x2, y2) ) continue;
 						Reversi rcc = rc.clone();
 						rcc.put_stone(x2, y2);
-
 						value = evaluation(rcc, deep-2);
 						if ( play_color == BLACK ) {
 							if ( value < best2 ) continue;
 							best2 = value;
-						} else if ( play_color == WHITE ) {
+						} else {
 							if ( value > best2 ) continue;
 							best2 = value;
 						}
@@ -65,7 +64,7 @@ float AI::evaluation(Reversi& r, int deep) {
 			if ( play_color == BLACK ) {
 				if ( best2 > best1 ) continue;
 				best1 = best2;
-			} else if ( play_color == WHITE ) {
+			} else {
 				if ( best2 < best1 ) continue;
 				best1 = best2;
 			}
