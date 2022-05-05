@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 
-#include "../defines.h"
-#include "../ai.h"
+#include "defines.h"
+#include "ai.h"
 #include "random.h"
 
 #define MOTHER_PRIORITY 0.6
@@ -21,14 +21,9 @@ float AI::evaluation(Reversi& r, int deep) {
 		return 0.0;
 	}
 
-	if ( !r.is_game_continue() ) {
-		int score = r.get_score();
-		if ( score > 0 ) return 100000.0;
-		if ( score < 0 ) return -100000.0;
-		return 0.0;
-	}
+	if ( r.is_end() ) return gameEndEvaluate( r.get_score() );
 
-	if ( deep == 1 ) return evaluate(r.get_inputs());
+	if ( deep == 1 ) return evaluate( r.get_inputs() );
 
 	for ( int y1=0; y1<REVERSI_SIZE; y1++ ) {
 		for ( int x1=0; x1<REVERSI_SIZE; x1++ ) {
@@ -36,14 +31,10 @@ float AI::evaluation(Reversi& r, int deep) {
 			Reversi rc = r.clone();
 			rc.put_stone(x1, y1);
 
-			if ( !rc.is_game_continue() ) {
-				int score = rc.get_score();
-				if ( score > 0 ) best2 = 100000.0;
-				if ( score < 0 ) best2 = -100000.0;
-				if ( score == 0 ) best2 = 0;
+			if ( rc.is_end() ) {
+				best2 = gameEndEvaluate( rc.get_score() );
 			} else {
-				if (play_color == BLACK) best2 = -100000.0;
-				else best2 = 100000.0;
+				( play_color == BLACK ) ? best2 = -100000.0 : best2 = 100000;
 				for ( int y2=0; y2<REVERSI_SIZE; y2++ ) {
 					for ( int x2=0; x2<REVERSI_SIZE; x2++ ) {
 						if ( !rc.is_puttable(x2, y2) ) continue;

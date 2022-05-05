@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../reversi.h"
+#include "reversi.h"
 
 #define b(y, x) board[y][x]
 #define by(y) b(y,0)+b(y,1)+b(y,2)+b(y,3)+b(y,4)+b(y,5)
@@ -20,9 +20,9 @@ Reversi::Reversi() {
 	oppTurn = WHITE;
 }
 
-array<float, PARAMETERS> Reversi::get_inputs() {
-	array<float, PARAMETERS> rtn = {};
-	array<int, 6> arr = {};
+array<int, PARAMETERS> Reversi::get_inputs() const {
+	array<int, PARAMETERS> rtn;
+	array<unsigned int, 6> arr;
 
 	// 中心2x2
 	arr[0] = b(2,2)+b(2,3)+b(3,2)+b(3,3);
@@ -64,7 +64,7 @@ array<float, PARAMETERS> Reversi::get_inputs() {
 	return rtn;
 }
 
-bool Reversi::is_puttable(int x, int y) {
+bool Reversi::is_puttable(int x, int y) const{
 	if (board[y][x] != EMPTY) return false;
 
 	int dx, dy, sx, sy, reverseCount;
@@ -126,7 +126,7 @@ void Reversi::update_turn() {
 	turn = EMPTY; oppTurn = 0; return;
 }
 
-bool Reversi::is_nextPlayer_puttable() {
+bool Reversi::is_nextPlayer_puttable() const {
 	for ( int y=0; y<REVERSI_SIZE; y++ ) {
 		for ( int x=0; x<REVERSI_SIZE; x++ ) {
 			if ( is_puttable(x, y) ) return true;
@@ -135,10 +135,12 @@ bool Reversi::is_nextPlayer_puttable() {
 	return false;
 }
 
-int Reversi::get_score() {
+int Reversi::get_score() const {
 	int s = 0;
-	for ( auto& boa : board ) {
-		for ( auto& b : boa ) s += b;
+	for ( auto&& boa : board ) {
+		for ( auto&& b : boa ) {
+			s += b;
+		}
 	}
 	int whites = s / WHITE;
 	int blacks = s % WHITE;
@@ -149,7 +151,7 @@ int Reversi::get_score() {
 	return (blacks-whites-empties);
 }
 
-Reversi Reversi::clone() {
+Reversi Reversi::clone() const {
 	Reversi r;
 	r.board = board;
 	r.turn = turn;
@@ -157,7 +159,7 @@ Reversi Reversi::clone() {
 	return r;
 }
 
-void Reversi::print() {
+void Reversi::print() const {
 	for ( auto& boa : board ) {
 		for ( auto& b : boa ) {
 			printf(" %3d,", b);

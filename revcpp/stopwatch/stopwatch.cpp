@@ -1,4 +1,4 @@
-#include "../stopwatch.h"
+#include "stopwatch.h"
 
 #define NC "\e[0m"
 #define YEL "\e[0;33m"

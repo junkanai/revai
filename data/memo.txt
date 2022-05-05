@@ -8,4 +8,8 @@ gen : 100 ( inherited from turn 1, gen 1000 )
 
 data3.txt
 turn : 3
-gen : 300
+gen : 500
+
+data4.txt
+turn : 3
+gen : 1000

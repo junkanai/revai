@@ -1,4 +1,4 @@
 #pragma once
 
-#include "ReversiGA.h"
-#include "stopwatch.h"
+#include "ga/ReversiGA.h"
+#include "stopwatch/stopwatch.h"

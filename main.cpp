@@ -4,9 +4,9 @@
 
 #include "revcpp/revcpp.h"
 
-#define GEN_MAX 100
+#define GEN_MAX 500
 #define READ_FILE "data/data3.txt"
-#define WRITE_FILE "data/data3.txt"
+#define WRITE_FILE "data/data4.txt"
 
 #define NC "\e[0m"
 #define MAG "\e[0;35m"

@@ -3,8 +3,7 @@
 #include <fstream>
 #include <array>
 
-#include "../defines.h"
-#include "../reversi.h"
+#include "defines.h"
 
 class DNA {
 private:
@@ -16,9 +15,10 @@ public:
 	int reward;
 	int gen;
 	DNA();
-	float evaluate(const std::array<float, PARAMETERS> inputs);
+	void init();
+	float evaluate(const std::array<int, PARAMETERS>& inputs);
 	void mutate();
-	void print();
+	void print() const;
 	void read(std::ifstream& read_file);
 	void write(std::ofstream& write_file);
 };
