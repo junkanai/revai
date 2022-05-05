@@ -11,8 +11,8 @@ public:
 	void put_stone(Reversi& r);
 	AI birth(const AI& father);
 	float gameEndEvaluate(int score) const {
-		if ( score > 0 ) return 100000.0;
-		if ( score < 0 ) return -100000.0;
+		if ( score > 0 ) return score*10000.0;
+		if ( score < 0 ) return -score*10000.0;
 		return 0.0;
 	};
 	void set_black() { play_color = BLACK; };
