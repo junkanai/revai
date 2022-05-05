@@ -5,7 +5,7 @@ import time
 from revpy import Reversi, AI, Tiles, Side, SCREEN_SIZE, WHITE, BLACK
 
 DATA_FILE = "data/data5.txt"
-AI_TURN = BLACK
+AI_TURN = WHITE
 
 def main():
     pygame.init()
